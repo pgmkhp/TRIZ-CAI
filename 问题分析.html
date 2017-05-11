@@ -1,0 +1,96 @@
+<meta charset="UTF-8">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="css/fileinput.min.css" rel="stylesheet">
+
+
+<form class="form-horizontal">
+    <!--项目名称-->
+    <div class="form-group">
+        <label for="projectname" class="col-sm-2 control-label">项目名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="projectname" placeholder="请输入项目名称">
+        </div>
+    </div>
+    <!--项目名称结束-->
+
+    <!--问题描述-->
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">问题描述</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="description" placeholder="请输入问题描述"></textarea>
+        </div>
+    </div>
+    <!--问题描述结束-->
+
+    <!--项目成员-->
+    <div class="form-group">
+        <label for="member" class="col-sm-2 control-label">项目成员</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="member" placeholder="请输入项目成员">
+        </div>
+    </div>
+    <!--问题描述结束-->
+
+    <!--图片上传-->
+    <div class="form-group">
+        <label for="picture" class="col-sm-2 control-label">图片</label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control file" id="picture" data-show-caption="false" multiple data-allowed-file-extensions='["jpg", "jpeg", "bmp"]'>
+        </div>
+    </div>
+    <!--图片上传结束-->
+
+    <!--起止时间-->
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">时间</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="startdate" placeholder="开始时间">
+        </div>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="enddate" placeholder="结束时间">
+        </div>
+    </div>
+    <!--起止时间结束-->
+
+    <!--保存按钮-->
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-default">保存</button>
+        </div>
+    </div>
+    <!--保存按钮结束-->
+
+</form>
+
+
+<script src="js/jquery-3.2.0.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/fileinput.min.js"></script>
+<script>
+// 起止日期选择
+$("#startdate").datepicker({
+    changeMonth: true,
+    dateFormat: "yy-mm-dd",
+    monthNamesShort: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+    onClose: function(selectedDate) {
+        $("#enddate").datepicker("option", "minDate", selectedDate);
+    }
+});
+
+$("#enddate").datepicker({
+    changeMonth: true,
+    dateFormat: "yy-mm-dd",
+    monthNamesShort: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+    onClose: function(selectedDate) {
+        $("#startdate").datepicker("option", "maxDate", selectedDate);
+        //$("#enddate").val($(this).val());
+    }
+});
+// 起止日期选择结束
+
+
+</script>
