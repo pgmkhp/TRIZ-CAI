@@ -25,6 +25,58 @@ var line4data = new Graph();
 document.oncontextmenu = function() {
     return false;
 }
+function step(n) {
+    $('.content').hide();
+    $('#step'+n).show();
+    $('.sidebar li').removeClass('active');
+    $('.sidebar li').eq(n-1).addClass('active');
+}
+
+
+// --------------------------------------
+// |       问题分析部分                  |
+// --------------------------------------
+
+// 起止日期选择
+$("#startdate").datepicker({
+    changeMonth: true,
+    dateFormat: "yy-mm-dd",
+    monthNamesShort: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+    onClose: function(selectedDate) {
+        $("#enddate").datepicker("option", "minDate", selectedDate);
+    }
+});
+
+$("#enddate").datepicker({
+    changeMonth: true,
+    dateFormat: "yy-mm-dd",
+    monthNamesShort: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+    onClose: function(selectedDate) {
+        $("#startdate").datepicker("option", "maxDate", selectedDate);
+        //$("#enddate").val($(this).val());
+    }
+});
+// 起止日期选择结束
+$('#save').click(function() {
+    console.log('Button down');
+    projectname = $('#projectname').val();
+    description = $('#description').val();
+    member = $('#member').val();
+    startdate = $('#startdate').val();
+    enddate = $('#enddate').val();
+    imglist = $('#imgdescription').files;
+    // imgdescription = URL.createObjectURL(imglist[0]);
+
+    console.log(imglist);
+    
+});
+
+
+// --------------------------------------
+// |       系统分析部分                  |
+// --------------------------------------
 
 // 组件创建函数，接受一个组件的class
 function createComponent(classname) {
@@ -42,7 +94,7 @@ function createComponent(classname) {
     // 双击更改组件名称
     comp.dblclick(function() {
         curcomp = comp;
-        $('#modifyModal').modal('toggle'); // 显示模态框
+        $('#modifycom').modal('toggle'); // 显示模态框
     });
     // 右键删除组件
     comp.bind('mousedown', function(even) {
@@ -54,11 +106,11 @@ function createComponent(classname) {
 }
 
 // 修改名字
-$('#renamebtn').click(function() {
+$('#modifycom button:last').click(function() {
     if (curcomp) {
-        curcomp.html($('#newname').val());
-        $('#newname').val('');
-        $('#modifyModal').modal('toggle'); // 关闭模态框
+        curcomp.html($('#modifycom input').val());
+        $('#modifycom input').val('');
+        $('#modifycom').modal('toggle'); // 关闭模态框
         curcomp = null;
     }
 });
@@ -71,7 +123,6 @@ jsPlumb.ready(function() {
         Container: "board",
         ConnectionOverlays: [
             ["PlainArrow", {location: 1}],
-            ["Label", {label: "未命名"}]
         ],
     });   
 });
@@ -107,12 +158,25 @@ $('.linebtn').click(function() {
 
 // 连线事件
 jsPlumb.bind("connection", function(conn, originalEvent) {
+    conn.connection.setLabel('未命名');
     jsPlumb.toggleDraggable($('.component'));
     jsPlumb.unmakeEverySource();
     jsPlumb.unmakeEveryTarget();
     $('.linebtn').removeClass('btn-primary');
 
     line1data.addEdge(conn.sourceId, conn.targetId);
+});
+
+// 鼠标双击连线，修改连线标题
+jsPlumb.bind("dblclick", function(conn, originalEvent) {
+    $('#modifyline').modal('toggle');
+    curline = conn;
+});
+$('#modifyline button:last').click(function() {
+    curline.setLabel($('#modifyline input').val());
+    $('#modifyline input').val('');
+    $('#modifyline').modal('toggle');
+    curline = null;
 });
 
 // 鼠标右键连线，删除连线
@@ -140,6 +204,7 @@ function Graph() {
     this.addEdge = addEdge;
     this.delEdge = delEdge;
     this.getData = getData;
+    this.toString = toString;
 }
 function addVertex(id) {
     this.vertices++;
@@ -168,3 +233,26 @@ function getData() {
     }
     return data;
 }
+function toString() {
+    var data = this.getData();
+    var list = [];
+    for (var i=0; i<data.length; i++) {
+        var s = $('#'+data[i][0]);
+        var t = $('#'+data[i][1]);
+        var line = jsPlumb.select({source:s, target:t});
+        list.push([s.html(), t.html(), line.getLabel()]);
+    }
+    return list;
+}
+
+
+// --------------------------------------
+// |       标准解部分                    |
+// --------------------------------------
+
+$('#demo').click(function () {
+    var list1 = line1data.toString();
+    for (var item in list1) {
+        item[0]
+    }
+});

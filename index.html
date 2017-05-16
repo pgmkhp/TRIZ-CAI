@@ -7,6 +7,8 @@
     <title>基于标准解的计算机辅助创新系统</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/fileinput.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -21,8 +23,8 @@
     </nav>
     <!--导航条结束-->
 
-    <!--模态框：修改文字-->
-    <div id="modifyModal" class="modal fade" tabindex="-1">
+    <!--模态框：修改组件名称-->
+    <div id="modifycom" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -34,16 +36,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="newname">新名称</label>
-                        <input type="text" class="form-control" id="newname" placeholder="请在这里输入新名称">
+                        <input type="text" class="form-control" placeholder="请在这里输入新名称">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id='renamebtn' type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="modifyModal" class="modal fade" tabindex="-1">
+    <!--模态框：修改连线名称-->
+    <div id="modifyline" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -55,11 +58,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="newname">新名称</label>
-                        <input type="text" class="form-control" id="newname" placeholder="请在这里输入新名称">
+                        <input type="text" class="form-control" placeholder="请在这里输入新名称">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id='renamebtn' type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
@@ -72,39 +75,217 @@
             <!--侧边栏-->     
             <div class="col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li><a href="#">问题分析</a></li>
-                    <li class="active"><a href="#">系统分析</a></li>
-                    <li><a href="#">标准解</a></li>
-                    <li><a href="#">作用链</a></li>
-                    <li><a href="#">生成报表</a></li>
+                    <li><a href="javascript:step(1)">问题分析</a></li>
+                    <li class="active"><a href="javascript:step(2)">系统分析</a></li>
+                    <li><a href="javascript:step(3)">标准解</a></li>
+                    <li><a href="javascript:step(4)">作用链</a></li>
+                    <li><a href="javascript:step(5)">生成报表</a></li>
                 </ul>
             </div>
             <!--侧边栏结束-->
         
             <!--内容主体-->
             <div class="col-md-10 col-md-offset-2 main" id="main">
-                <!-- 工具栏 -->
-                <div class="container-fluid toolbar">
-                    <div class="btn-toolbar">
-                        <div class="btn-group">
-                            <button id="component3" type="button" class="btn btn-default">超系统组件</button>
-                            <button id="component1" type="button" class="btn btn-default">系统组件</button>
-                            <button id="component2" type="button" class="btn btn-default">作用对象</button>
+                <!--问题分析-->
+                <div id="step1" class="content">
+                    <form class="form-horizontal">
+                        <!--项目名称-->
+                        <div class="form-group">
+                            <label for="projectname" class="col-sm-2 control-label">项目名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="projectname" placeholder="请输入项目名称">
+                            </div>
                         </div>
-                        <div class="btn-group">
-                            <button id="line1" type="button" class="btn btn-default linebtn">充分</button>
-                            <button id="line2" type="button" class="btn btn-default linebtn">不足</button>
-                            <button id="line3" type="button" class="btn btn-default linebtn">过度</button>
-                            <button id="line4" type="button" class="btn btn-default linebtn">有害</button>
-                        </div>
-                    </div>            
-                </div>
-                <!-- 工具栏结束 -->
+                        <!--项目名称结束-->
 
-                <!-- 画板 -->
-                <div class="board" id="board">
+                        <!--问题描述-->
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">问题描述</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" placeholder="请输入问题描述"></textarea>
+                            </div>
+                        </div>
+                        <!--问题描述结束-->
+
+                        <!--项目成员-->
+                        <div class="form-group">
+                            <label for="member" class="col-sm-2 control-label">项目成员</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="member" placeholder="请输入项目成员">
+                            </div>
+                        </div>
+                        <!--问题描述结束-->
+
+                        <!--图片上传-->
+                        <div class="form-group">
+                            <label for="picture" class="col-sm-2 control-label">图片</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control file" id="picture" data-show-caption="false" multiple data-allowed-file-extensions='["jpg", "jpeg", "bmp"]'>
+                            </div>
+                        </div>
+                        <!--图片上传结束-->
+
+                        <!--起止时间-->
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">时间</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="startdate" placeholder="开始时间">
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="enddate" placeholder="结束时间">
+                            </div>
+                        </div>
+                        <!--起止时间结束-->
+
+                        <!--保存按钮-->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a id="save" class="btn btn-default">保存</a>
+                            </div>
+                        </div>
+                        <!--保存按钮结束-->
+
+                    </form>
                 </div>
-                <!-- 画板结束 -->
+                <!--问题分析结束-->
+
+                <!--系统分析-->
+                <div id="step2" class="content">
+                    <!-- 工具栏 -->
+                    <div class="container-fluid toolbar">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <button id="component3" type="button" class="btn btn-default">超系统组件</button>
+                                <button id="component1" type="button" class="btn btn-default">系统组件</button>
+                                <button id="component2" type="button" class="btn btn-default">作用对象</button>
+                            </div>
+                            <div class="btn-group">
+                                <button id="line1" type="button" class="btn btn-default linebtn">充分</button>
+                                <button id="line2" type="button" class="btn btn-default linebtn">不足</button>
+                                <button id="line3" type="button" class="btn btn-default linebtn">过度</button>
+                                <button id="line4" type="button" class="btn btn-default linebtn">有害</button>
+                            </div>
+                        </div>            
+                    </div>
+                    <!-- 工具栏结束 -->
+
+                    <!-- 画板 -->
+                    <div class="board" id="board">
+                    </div>
+                    <!-- 画板结束 -->
+                </div>
+                <!--系统分析结束-->
+
+                <!--标准解-->
+                <div id="step3" class="content">
+                    <!--标准解上半部分-->
+                    <div id="top" class='container overflow-y'>
+                        <div class="row">
+                            <div class="col-sm-3">不足</div>
+                            <div class="col-sm-5">
+                                
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                    <!--标准解上半部分结束-->
+
+                    <!--标准解下半部分-->
+                    <div id="bottom">
+                        <div class="row">
+                            <!--树形目录-->
+                            <div class="col-sm-4">
+                                <div class="tree overflow-x overflow-y">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="btn btn-default btn-sm">顶级节点1</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="btn btn-default btn-sm">顶级节点1</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="btn btn-default btn-sm">顶级节点1</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="btn btn-default btn-sm">顶级节点2</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>           
+                            </div>
+                            <!--树形目录结束-->
+
+                            <!--标准解内容-->
+                            <div class="col-sm-8">
+                                盛大的卢卡斯的经历
+                            </div>
+                            <!--标准解内容结束-->
+                        </div>
+
+                    </div>
+                    <!--标准解下半部分结束-->
+                </div>
+                <!--标准解结束-->
+
+
             </div>
             <!--内容主体结束-->
         </div>   
@@ -117,11 +298,11 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jsplumb.min.js"></script>
+    <script src="js/fileinput.min.js"></script>
     <script src="js/main.js"></script>
 
     <script>
-
-
+        $('.content').hide()
     </script>
 </body>
 </html>

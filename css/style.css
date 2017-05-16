@@ -40,6 +40,8 @@ body {
     position: fixed;
     top:50px;
     bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 /* 网页内容部分结束*/
 
@@ -90,6 +92,8 @@ body {
     top: 0px;
 }
 .component3 {
+    margin-left: 10px;
+    margin-right: 10px;
     height: 40px;
     background: #6c6;
     display: inline-block;
@@ -108,3 +112,25 @@ body {
     top: 0px;
 }
 /* 组件结束 */
+
+/* 标准解部分 */
+#top {
+    max-height:300px;
+    min-height:200px;
+}
+#bottom {
+    height:50%;
+}
+.tree {
+    height:100%;
+}
+.overflow-y {overflow-y: auto;}
+.overflow-x {overflow-x: auto;}
+.rect {
+    height: 50px;
+    width: 100px;
+    padding: 5px;
+    background-color: #eee;
+    border: solid 1px #aaa;
+}
+/* 标准解部分结束 */
