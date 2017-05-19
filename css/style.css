@@ -40,8 +40,6 @@ body {
     position: fixed;
     top:50px;
     bottom: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 /* 网页内容部分结束*/
 
@@ -114,23 +112,30 @@ body {
 /* 组件结束 */
 
 /* 标准解部分 */
+body {
+    height: 100%;
+}
+#main {
+    height: 100%;
+}
+.content {
+    height: 100%;
+}
 #top {
-    max-height:300px;
-    min-height:200px;
+    height: 50%;
+    overflow-y: auto;
 }
 #bottom {
-    height:50%;
+    height: 50%;
 }
-.tree {
-    height:100%;
+#bottom div.row, #bottom div.col-sm-6 {
+    height: 100%;
 }
-.overflow-y {overflow-y: auto;}
-.overflow-x {overflow-x: auto;}
-.rect {
-    height: 50px;
-    width: 100px;
-    padding: 5px;
-    background-color: #eee;
-    border: solid 1px #aaa;
+#bottom div.panel {
+    height: 85%;
+}
+#ptree {
+    overflow-y: auto;
+    height: 85%;
 }
 /* 标准解部分结束 */

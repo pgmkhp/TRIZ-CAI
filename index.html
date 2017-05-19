@@ -9,6 +9,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/fileinput.min.css" rel="stylesheet">
+    <link href="css/themes/default/style.min.css" rel="stylesheet">
+    <link href="css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -75,9 +77,9 @@
             <!--侧边栏-->     
             <div class="col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li><a href="javascript:step(1)">问题分析</a></li>
-                    <li class="active"><a href="javascript:step(2)">系统分析</a></li>
-                    <li><a href="javascript:step(3)">标准解</a></li>
+                    <li class="active"><a href="javascript:step(1)">问题分析</a></li>
+                    <li><a href="javascript:step(2)">系统分析</a></li>
+                    <li><a id="demo" href="javascript:step(3)">标准解</a></li>
                     <li><a href="javascript:step(4)">作用链</a></li>
                     <li><a href="javascript:step(5)">生成报表</a></li>
                 </ul>
@@ -179,103 +181,45 @@
                 <!--标准解-->
                 <div id="step3" class="content">
                     <!--标准解上半部分-->
-                    <div id="top" class='container overflow-y'>
-                        <div class="row">
-                            <div class="col-sm-3">不足</div>
-                            <div class="col-sm-5">
-                                
-                            </div>
-                            <div class="col-sm-4"></div>
-                        </div>
+                    <div id="top">
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th>作用</th>
+                                <th>源组件</th>
+                                <th>作用名称</th>
+                                <th>目标组件</th>
+                                <th>标准解</th>
+                            </tr>
+                        </table>
                     </div>
                     <!--标准解上半部分结束-->
-
+                    
                     <!--标准解下半部分-->
                     <div id="bottom">
                         <div class="row">
                             <!--树形目录-->
-                            <div class="col-sm-4">
-                                <div class="tree overflow-x overflow-y">
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="btn btn-default btn-sm">顶级节点1</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn btn-default btn-sm">顶级节点1</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn btn-default btn-sm">顶级节点1</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn btn-default btn-sm">顶级节点2</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="btn btn-default btn-sm">次级节点1</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>           
+                            <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">标准解目录</h3>
+                                    </div>
+                                    <div id="ptree" class="panel-body">
+                                        <div id="tree"></div>
+                                    </div>
+                                </div>
                             </div>
                             <!--树形目录结束-->
 
                             <!--标准解内容-->
-                            <div class="col-sm-8">
-                                盛大的卢卡斯的经历
+                            <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">标准解</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        盛大的卢卡斯的经历
+                                    </div>
+                                </div>
                             </div>
                             <!--标准解内容结束-->
                         </div>
@@ -284,7 +228,6 @@
                     <!--标准解下半部分结束-->
                 </div>
                 <!--标准解结束-->
-
 
             </div>
             <!--内容主体结束-->
@@ -299,10 +242,13 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jsplumb.min.js"></script>
     <script src="js/fileinput.min.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/jquery.ztree.core.min.js"></script>
     <script src="js/main.js"></script>
 
     <script>
-        $('.content').hide()
+        $('.content').hide();
+        $('#step1').show();
     </script>
 </body>
 </html>
