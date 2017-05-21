@@ -12,8 +12,8 @@ var curline = null; // 当前选中线
 // 线的样式
 var line1 = {stroke: "green", strokeWidth:2};
 var line2 = {stroke: "green", strokeWidth:2, dashstyle: "5 2"};
-var line3 = {stroke: "red", strokeWidth:2};
-var line4 = {stroke: "green", strokeWidth:6};
+var line3 = {stroke: "green", strokeWidth:6};
+var line4 = {stroke: "red", strokeWidth:2};
 
 // 线、组件的数据结构
 var line1data = new Graph();
@@ -89,6 +89,9 @@ function createComponent(classname) {
     var id = jsPlumbUtil.uuid();
     comp.attr('id', id);
     line1data.addVertex(id);
+    line2data.addVertex(id);
+    line3data.addVertex(id);
+    line4data.addVertex(id);
 
     jsPlumb.draggable(comp, {containment: "parent"});
     // 双击更改组件名称
@@ -101,6 +104,9 @@ function createComponent(classname) {
         if (even.which == 3) {
             jsPlumb.remove(comp);
             line1data.delVertex(id);
+            line2data.delVertex(id);
+            line3data.delVertex(id);
+            line4data.delVertex(id);
         }
     });
 }
@@ -150,6 +156,7 @@ $('#line4').click(function() {
     jsPlumb.importDefaults({PaintStyle: line4});
 });
 $('.linebtn').click(function() {
+    curline = $(this).attr('id');
     jsPlumb.toggleDraggable($('.component'));
     jsPlumb.makeSource($('.component'), {detachable:false});
     jsPlumb.makeTarget($('.component'), {detachable:false});
@@ -163,8 +170,16 @@ jsPlumb.bind("connection", function(conn, originalEvent) {
     jsPlumb.unmakeEverySource();
     jsPlumb.unmakeEveryTarget();
     $('.linebtn').removeClass('btn-primary');
-
-    line1data.addEdge(conn.sourceId, conn.targetId);
+    if (curline == 'line1')
+        line1data.addEdge(conn.sourceId, conn.targetId);
+    else if (curline == 'line2')
+        line2data.addEdge(conn.sourceId, conn.targetId);
+    else if (curline == 'line3')
+        line3data.addEdge(conn.sourceId, conn.targetId);
+    else if (curline == 'line4')
+        line4data.addEdge(conn.sourceId, conn.targetId);
+    
+    curline = null;
 });
 
 // 鼠标双击连线，修改连线标题
@@ -185,6 +200,10 @@ jsPlumb.bind("mousedown", function(conn, originalEvent) {
         jsPlumb.detach(conn);
 
         line1data.delEdge(conn.sourceId, conn.targetId);
+        line2data.delEdge(conn.sourceId, conn.targetId);
+        line3data.delEdge(conn.sourceId, conn.targetId);
+        line4data.delEdge(conn.sourceId, conn.targetId);
+
     }      
 });
 
@@ -220,7 +239,9 @@ function addEdge(sid, tid) {
     this.edges++;
 }
 function delEdge(sid, tid) {
-    this.adj[sid].splice($.inArray(tid, this.adj[sid]),1);
+    var index = $.inArray(tid, this.adj[sid])
+    if (index != -1)
+        this.adj[sid].splice(index, 1);
     this.edges--;
 }
 function getData() {
@@ -250,10 +271,23 @@ function toString() {
 // |       标准解部分                    |
 // --------------------------------------
 
-$('#demo').click(function () {
-    var plist = line1data.toString();
-    for (var i=0; i<plist.length; i++) {
-        var html = '<tr><td>不足</td><td>'+plist[i][0]+'</td><td>'+plist[i][2][0][0]+'</td><td>'+plist[i][1]+'</td><td></td></tr>';
+$('#stdsolbtn').click(function () {
+    $('#top table tbody').html('<tr><th>作用</th><th>源组件</th><th>作用名称</th><th>目标组件</th><th>标准解</th></tr>');
+
+    var list2 = line2data.toString();
+    var list3 = line3data.toString();
+    var list4 = line4data.toString();
+
+    for (var i=0; i<list2.length; i++) {
+        var html = '<tr><td>不足</td><td>'+list2[i][0]+'</td><td>'+list2[i][2][0][0]+'</td><td>'+list2[i][1]+'</td><td></td></tr>';
+        $('#top table').append(html);
+    }
+    for (var i=0; i<list3.length; i++) {
+        var html = '<tr><td>过度</td><td>'+list3[i][0]+'</td><td>'+list3[i][2][0][0]+'</td><td>'+list3[i][1]+'</td><td></td></tr>';
+        $('#top table').append(html);
+    }
+    for (var i=0; i<list4.length; i++) {
+        var html = '<tr><td>有害</td><td>'+list4[i][0]+'</td><td>'+list4[i][2][0][0]+'</td><td>'+list4[i][1]+'</td><td></td></tr>';
         $('#top table').append(html);
     }
 });
