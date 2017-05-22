@@ -339,13 +339,16 @@ $('#createbtn').click(function() {
         $('#opicture').append(imgele);
     }
 
-    // var datelist1 = startdate.split('-');
-    // var date1 = new Date(datelist1[0], datelist1[1]-1, datelist1[2]);
-    // var datelist2 = enddate.split('-');
-    // var date2 = new Date(datelist2[0], datelist2[1]-1, datelist2[2]);
-    // var days = (date2 - date1) / 1000 / 60 / 60 / 24;
-    // var str = '从 '+ startdate +' 到 '+ enddate +' ，共 '+ days +' 天';
-    // $('#odate').html(str);
+    if (startdate && enddate) {
+        var datelist1 = startdate.split('-');
+        var date1 = new Date(datelist1[0], datelist1[1]-1, datelist1[2]);
+        var datelist2 = enddate.split('-');
+        var date2 = new Date(datelist2[0], datelist2[1]-1, datelist2[2]);
+        var days = (date2 - date1) / 1000 / 60 / 60 / 24;
+        var str = '从 '+ startdate +' 到 '+ enddate +' ，共 '+ days +' 天';
+        $('#odate').html(str);
+    }
+    
 
     // 系统分析部分
     var oboard = $('#board').clone();
