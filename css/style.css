@@ -140,5 +140,10 @@ body {
 /* 标准解部分结束 */
 
 /* 生成报告部分 */
-
+.oboard {
+    position: relative;
+    height: 500px;
+    width: 100%;
+    background-color: #f5f5f5;
+}
 /* 生成报告部分结束 */
