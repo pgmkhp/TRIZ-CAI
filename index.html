@@ -81,7 +81,7 @@
                     <li><a href="javascript:step(2)">系统分析</a></li>
                     <li><a id="stdsolbtn" href="javascript:step(3)">标准解</a></li>
                     <li><a href="javascript:step(4)">作用链</a></li>
-                    <li><a href="javascript:step(5)">生成报表</a></li>
+                    <li><a id="createbtn" href="javascript:step(5)">生成报表</a></li>
                 </ul>
             </div>
             <!--侧边栏结束-->
@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <label for="picture" class="col-sm-2 control-label">图片</label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control file" id="picture" data-show-caption="false" multiple data-allowed-file-extensions='["jpg", "jpeg", "bmp"]'>
+                                <input type="file" onchange="handleImg(this)" class="form-control file" id="picture" data-show-caption="false" data-show-upload="false" multiple data-allowed-file-extensions='["jpg", "jpeg", "bmp"]'>
                             </div>
                         </div>
                         <!--图片上传结束-->
@@ -227,6 +227,85 @@
                     <!--标准解下半部分结束-->
                 </div>
                 <!--标准解结束-->
+
+                <!--作用链-->
+                <div id="step4" class="content">
+                    
+                </div>
+                <!--作用链结束-->
+
+                <!--生成报告-->
+                <div id="step5" class="content">
+                    <!--项目基本描述-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">项目基本描述</h3>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目名称</div></dt>
+                                <dd id="oprojectname"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">问题描述</div></dt>
+                                <dd id="odescription"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目成员</div></dt>
+                                <dd id="omember"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目图片</div></dt>
+                                <dd id="opicture"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">起止时间</div></dt>
+                                <dd id="odate"></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!--项目基本描述结束-->
+
+                    <!--系统分析-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">系统分析</h3>
+                        </div>
+                        <div class="panel-body">
+                            
+                        </div>
+                    </div>
+                    <!--系统分析结束-->
+
+                    <!--标准解-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">标准解</h3>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目名称</div></dt>
+                                <dd>sssss</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!--标准解结束-->
+
+                    <!--作用链-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">作用链</h3>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目名称</div></dt>
+                                <dd>sssss</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!--作用链结束-->
+                </div>
+                <!--生成报告结束-->
 
             </div>
             <!--内容主体结束-->

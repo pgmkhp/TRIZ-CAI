@@ -2,7 +2,7 @@
 var projectname; // 项目名称
 var description; // 问题描述
 var member; // 项目成员
-var imgdescription; // 图像描述
+var imglist = []; // 图像描述
 var startdate; // 开始日期
 var enddate; // 结束日期
 
@@ -30,6 +30,7 @@ function step(n) {
     $('#step'+n).show();
     $('.sidebar li').removeClass('active');
     $('.sidebar li').eq(n-1).addClass('active');
+
 }
 
 
@@ -59,18 +60,29 @@ $("#enddate").datepicker({
     }
 });
 // 起止日期选择结束
+
+// 保存项目基本信息
+
+function handleImg(source) {
+    imglist = [];
+    for (var i=0; i<source.files.length; i++) {
+        var file = source.files[i];
+        var fr = new FileReader();        
+        fr.readAsDataURL(file);
+        fr.onloadend = function(e) {
+            imglist.push(e.target.result);  
+        };
+    }
+}
+
+
 $('#save').click(function() {
-    console.log('Button down');
     projectname = $('#projectname').val();
     description = $('#description').val();
     member = $('#member').val();
     startdate = $('#startdate').val();
     enddate = $('#enddate').val();
-    imglist = $('#imgdescription').files;
-    // imgdescription = URL.createObjectURL(imglist[0]);
 
-    console.log(imglist);
-    
 });
 
 
@@ -306,3 +318,35 @@ $('#tree').bind('select_node.jstree', function(e, data) {
 function printStdSol(num) {
     $('#stdsol').html(data2[num]);
 }
+
+
+// --------------------------------------
+// |       生成报告部分                  |
+// --------------------------------------
+$('#createbtn').click(function() {
+
+    // 项目基本描述部分
+    $('#oprojectname').html(projectname);
+    $('#odescription').html(description);
+    $('#omember').html(member);
+
+    $('#opicture').html('');
+    for (var i=0; i<imglist.length; i++) {
+        var imgele = document.createElement('img');
+        imgele.src = imglist[i];
+        imgele.width = 100;
+        $(imgele).addClass('img-thumbnail');
+        $('#opicture').append(imgele);
+    }
+
+    var datelist1 = startdate.split('-');
+    var date1 = new Date(datelist1[0], datelist1[1]-1, datelist1[2]);
+    var datelist2 = enddate.split('-');
+    var date2 = new Date(datelist2[0], datelist2[1]-1, datelist2[2]);
+    var days = (date2 - date1) / 1000 / 60 / 60 / 24;
+    var str = '从 '+ startdate +' 到 '+ enddate +' ，共 '+ days +' 天';
+    $('#odate').html(str);
+
+    // 系统分析部分
+});
+
