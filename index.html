@@ -59,8 +59,21 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="newname">新名称</label>
-                        <input type="text" class="form-control" placeholder="请在这里输入新名称">
+                        <label>新名称</label>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select id="fun1" class="form-control">
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="fun2" class="form-control">
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="fun3" class="form-control">
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -80,7 +93,7 @@
                     <li class="active"><a href="javascript:step(1)">问题分析</a></li>
                     <li><a href="javascript:step(2)">系统分析</a></li>
                     <li><a id="stdsolbtn" href="javascript:step(3)">标准解</a></li>
-                    <li><a href="javascript:step(4)">作用链</a></li>
+                    <li><a id="chainbtn" href="javascript:step(4)">作用链</a></li>
                     <li><a id="createbtn" href="javascript:step(5)">生成报表</a></li>
                 </ul>
             </div>
@@ -294,10 +307,7 @@
                             <h3 class="panel-title">作用链</h3>
                         </div>
                         <div class="panel-body">
-                            <dl class="dl-horizontal">
-                                <dt class="col-md-2"><div class="text-left">项目名称</div></dt>
-                                <dd>sssss</dd>
-                            </dl>
+
                         </div>
                     </div>
                     <!--作用链结束-->
@@ -321,6 +331,7 @@
     <script src="js/jquery.ztree.core.min.js"></script>
     <script src="js/data1.js"></script>
     <script src="js/data2.js"></script>
+    <script src="js/chaindata.js"></script>
     <script src="js/main.js"></script>
 
     <script>

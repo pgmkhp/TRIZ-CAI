@@ -9,6 +9,9 @@ var enddate; // 结束日期
 var curcomp = null; // 当前选中组件
 var curline = null; // 当前选中线
 
+var martix;
+var id2id;
+
 // 线的样式
 var line1 = {stroke: "green", strokeWidth:2};
 var line2 = {stroke: "green", strokeWidth:2, dashstyle: "5 2"};
@@ -198,12 +201,34 @@ jsPlumb.bind("connection", function(conn, originalEvent) {
 jsPlumb.bind("dblclick", function(conn, originalEvent) {
     $('#modifyline').modal('toggle');
     curline = conn;
+
+    $('#fun1').html('<option selected> 请选择 </option>');
+    $('#fun2').html('<option selected> 请选择 </option>');
+    $('#fun3').html('<option selected> 请选择 </option>');
+    for (var fun1 in chaindata) {
+        $('#fun1').append('<option>'+ fun1 +'</option>');
+    }
 });
 $('#modifyline button:last').click(function() {
-    curline.setLabel($('#modifyline input').val());
-    $('#modifyline input').val('');
+    curline.setLabel($('#fun3').children('option:selected').val());
     $('#modifyline').modal('toggle');
     curline = null;
+});
+$('#fun1').change(function() {
+    $('#fun2').html('<option selected> 请选择 </option>');
+    $('#fun3').html('<option selected> 请选择 </option>');
+    var fun1 = $('#fun1').children('option:selected').val();
+    for (var fun2 in chaindata[fun1]) {
+        $('#fun2').append('<option>'+ fun2 +'</option>');
+    }
+});
+$('#fun2').change(function() {
+    $('#fun3').html('<option selected> 请选择 </option>');
+    var fun1 = $('#fun1').children('option:selected').val();
+    var fun2 = $('#fun2').children('option:selected').val();
+    for (var i=0; i<chaindata[fun1][fun2].length; i++) {
+        $('#fun3').append('<option>'+ chaindata[fun1][fun2][i] +'</option>');
+    }            
 });
 
 // 鼠标右键连线，删除连线
@@ -320,6 +345,58 @@ function printStdSol(num) {
 }
 
 
+
+
+// --------------------------------------
+// |       作用链部分                    |
+// --------------------------------------
+$('#chainbtn').click(function() {
+    // 初始化id对应id数组和邻接矩阵
+    id2id = [];
+    martix = [];
+    for (var id in line1data.adj) {   
+        id2id.push(id);
+    }
+    for (var i=0; i<id2id.length; i++) {
+        martix.push([]);
+        for (var j=0; j<id2id.length; j++) {
+            martix[i][j] = 0;
+        }
+    }
+
+    // 邻接矩阵
+    var tmplist;
+    tmplist = line1data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        martix[s][t] = 1;
+    }
+    tmplist = line2data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        martix[s][t] = 1;
+    }
+    tmplist = line3data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        martix[s][t] = 1;
+    }
+    tmplist = line4data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        martix[s][t] = 1;
+    }
+
+    console.log(martix);
+    
+});
+
+
+
 // --------------------------------------
 // |       生成报告部分                  |
 // --------------------------------------
@@ -360,6 +437,5 @@ $('#createbtn').click(function() {
     // 标准解部分
     var otable = $('#stdsoltable').clone();
     $('#ostdsol').html(otable);
-    console.log(otable);
 });
 
