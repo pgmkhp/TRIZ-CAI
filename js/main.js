@@ -9,7 +9,9 @@ var enddate; // 结束日期
 var curcomp = null; // 当前选中组件
 var curline = null; // 当前选中线
 
-var martix1;
+var matrix1;
+var matrix2;
+var matrixlist;
 var id2id;
 
 // 线的样式
@@ -353,43 +355,53 @@ function printStdSol(num) {
 $('#chainbtn').click(function() {
     // 初始化id对应id数组和邻接矩阵
     id2id = [];
-    martix1 = [];
+    matrix1 = [];
+    matrix2 = [];
+    matrixlist = [];
     for (var id in line1data.adj) {   
         id2id.push(id);
     }
     for (var i=0; i<id2id.length; i++) {
-        martix1.push([]);
+        matrix1.push([]);
         for (var j=0; j<id2id.length; j++) {
-            martix1[i][j] = 0;
+            matrix1[i][j] = 0;
         }
     }
 
-    // 邻接矩阵
+    // 得到邻接矩阵
     var tmplist;
     tmplist = line1data.getData();
     for (var i=0; i<tmplist.length; i++) {
         var s = id2id.indexOf(tmplist[i][0]);
         var t = id2id.indexOf(tmplist[i][1]);
-        martix1[s][t] = 1;
+        matrix1[s][t] = 1;
     }
     tmplist = line2data.getData();
     for (var i=0; i<tmplist.length; i++) {
         var s = id2id.indexOf(tmplist[i][0]);
         var t = id2id.indexOf(tmplist[i][1]);
-        martix1[s][t] = 1;
+        matrix1[s][t] = 1;
     }
     tmplist = line3data.getData();
     for (var i=0; i<tmplist.length; i++) {
         var s = id2id.indexOf(tmplist[i][0]);
         var t = id2id.indexOf(tmplist[i][1]);
-        martix1[s][t] = 1;
+        matrix1[s][t] = 1;
     }
     tmplist = line4data.getData();
     for (var i=0; i<tmplist.length; i++) {
         var s = id2id.indexOf(tmplist[i][0]);
         var t = id2id.indexOf(tmplist[i][1]);
-        martix1[s][t] = 1;
+        matrix1[s][t] = 1;
     }
+
+    // 通过邻接矩阵得到可达矩阵
+    matrixlist.push($M(matrix1).add(Matrix.I(matrix1.length)));
+    for (var i=0; i<matrix1.length; i++) {
+        matrixlist.push(matrixlist[i].multiply(matrixlist[i]));
+    }
+    matrix2 = matrixlist.pop().map(function(x) {return x ? 1 : 0;}).elements;
+    console.log(matrixlist);
 
     // 输出id2id
     $('#id2id').html('<tbody></tbody>');
@@ -399,15 +411,24 @@ $('#chainbtn').click(function() {
     }
 
     // 输出邻接矩阵
-    $('#martix1 table').html('');
-    for (var i=0; i<martix1.length; i++) {
+    $('#matrix1 table').html('');
+    for (var i=0; i<matrix1.length; i++) {
         var row = $(document.createElement('tr'));
-        for (var j=0; j<martix1.length; j++) {
-            row.append('<td>'+ martix1[i][j] +'</td>');
+        for (var j=0; j<matrix1.length; j++) {
+            row.append('<td>'+ matrix1[i][j] +'</td>');
         }
-        $('#martix1 table').append(row);
+        $('#matrix1 table').append(row);
     }
-    
+
+    // 输出可达矩阵
+    $('#matrix2 table').html('');
+    for (var i=0; i<matrix2.length; i++) {
+        var row = $(document.createElement('tr'));
+        for (var j=0; j<matrix2.length; j++) {
+            row.append('<td>'+ matrix2[i][j] +'</td>');
+        }
+        $('#matrix2 table').append(row);
+    }
 });
 
 

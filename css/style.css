@@ -141,7 +141,7 @@ body {
 /* 标准解部分结束 */
 
 /* 作用链部分 */
-#martix1 table td, #martix2 table td {
+#matrix1 table td, #matrix2 table td {
     border: solid 1px;
     padding: 5px;
 }
