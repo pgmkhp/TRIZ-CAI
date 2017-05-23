@@ -61,6 +61,7 @@ body {
     top: 70px;
     bottom: 10px;
     background-color: #f5f5f5;
+    border: solid 1px #bbb;
 }
 /* 画板结束 */
 
@@ -138,6 +139,13 @@ body {
     height: 85%;
 }
 /* 标准解部分结束 */
+
+/* 作用链部分 */
+#martix1 table td, #martix2 table td {
+    border: solid 1px;
+    padding: 5px;
+}
+/* 作用链部分结束 */
 
 /* 生成报告部分 */
 .oboard {
