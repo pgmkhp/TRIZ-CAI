@@ -401,7 +401,52 @@ $('#chainbtn').click(function() {
         matrixlist.push(matrixlist[i].multiply(matrixlist[i]));
     }
     matrix2 = matrixlist.pop().map(function(x) {return x ? 1 : 0;}).elements;
-    console.log(matrixlist);
+
+    // 获取作用链
+    var slist = [];
+    var tlist = [];
+    for (var i=0; i<matrix1.length; i++) {
+        if (!$M(matrix1).row(i+1).max()) {
+            tlist.push(i);
+        }
+        if (!$M(matrix1).col(i+1).max()) {
+            slist.push(i);
+        }
+    }
+    console.log(slist);
+    console.log(tlist);
+
+    var marked = new Array(matrix1.length);
+    var pathlist = [];
+    var path = [];
+    function searchs2t(s, t) {
+        if (path.length >= matrix1.length+1) {
+            return;
+        }
+        path.push(s);
+        if (s == t) {
+            console.log(path.join());
+            pathlist.push(path);
+            path.pop();
+            return;
+        }
+        for (var i=0; i<matrix1.length; i++) {
+            if (path.indexOf(i)!=-1 && path[path.indexOf(i)-1]==path[path.length-1]) {
+                continue;
+            }
+            if (path[path.length-1] == i) {
+                continue;
+            }
+            if (matrix1[s][i]) {
+                searchs2t(i, t);
+            }
+        }
+        path.pop();
+    }
+    for (var i=0; i<slist.length; i++) {
+        searchs2t(slist[i], tlist[0]);
+    }
+
 
     // 输出id2id
     $('#id2id').html('<tbody></tbody>');
@@ -429,6 +474,9 @@ $('#chainbtn').click(function() {
         }
         $('#matrix2 table').append(row);
     }
+
+    // 输出作用链
+    
 });
 
 
