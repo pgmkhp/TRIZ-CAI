@@ -10,7 +10,6 @@
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/fileinput.min.css" rel="stylesheet">
     <link href="css/themes/default/style.min.css" rel="stylesheet">
-    <link href="css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -197,11 +196,11 @@
                     <div id="top">
                         <table id="stdsoltable" class="table table-striped table-bordered">
                             <tr>
-                                <th>作用</th>
-                                <th>源组件</th>
-                                <th>作用名称</th>
-                                <th>目标组件</th>
-                                <th>标准解</th>
+                                <th class="col-md-2">作用</th>
+                                <th class="col-md-2">源组件</th>
+                                <th class="col-md-2">作用名称</th>
+                                <th class="col-md-2">目标组件</th>
+                                <th class="col-md-4">标准解</th>
                             </tr>
                         </table>
                     </div>
@@ -275,7 +274,6 @@
                             <h3 class="panel-title">作用链</h3>
                         </div>
                         <div id="chain" class="panel-body">
-                            <div class="alert alert-success">ssss</div>
                         </div>
                     </div>
                 </div>
@@ -340,7 +338,7 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">作用链</h3>
                         </div>
-                        <div class="panel-body">
+                        <div id="ochain" class="panel-body">
 
                         </div>
                     </div>
@@ -362,10 +360,10 @@
     <script src="js/jsplumb.min.js"></script>
     <script src="js/fileinput.min.js"></script>
     <script src="js/jstree.min.js"></script>
-    <script src="js/jquery.ztree.core.min.js"></script>
     <script src="js/data1.js"></script>
     <script src="js/data2.js"></script>
     <script src="js/chaindata.js"></script>
+    <script src="js/stdsoldata.js"></script>
     <script src="js/sylvester.js"></script>
     <script src="js/main.js"></script>
 
