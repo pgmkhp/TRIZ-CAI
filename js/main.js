@@ -413,8 +413,6 @@ $('#chainbtn').click(function() {
             slist.push(i);
         }
     }
-    console.log(slist);
-    console.log(tlist);
 
     var marked = new Array(matrix1.length);
     var pathlist = [];
@@ -426,7 +424,7 @@ $('#chainbtn').click(function() {
         path.push(s);
         if (s == t) {
             console.log(path.join());
-            pathlist.push(path);
+            pathlist.push(path.slice(0));
             path.pop();
             return;
         }
@@ -476,7 +474,63 @@ $('#chainbtn').click(function() {
     }
 
     // 输出作用链
-    
+    var badmatrix = [];
+    for (var i=0; i<id2id.length; i++) {
+        badmatrix.push([]);
+        for (var j=0; j<id2id.length; j++) {
+            badmatrix[i][j] = 0;
+        }
+    }
+    tmplist = line2data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        badmatrix[s][t] = 1;
+    }
+    tmplist = line3data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        badmatrix[s][t] = 1;
+    }
+    tmplist = line4data.getData();
+    for (var i=0; i<tmplist.length; i++) {
+        var s = id2id.indexOf(tmplist[i][0]);
+        var t = id2id.indexOf(tmplist[i][1]);
+        badmatrix[s][t] = 1;
+    }
+
+    $('#chain').html('');
+    for (var i=0; i<pathlist.length; i++) {
+        var pathdiv = $(document.createElement('div'));
+        pathdiv.addClass('alert').addClass('alert-success');
+        for (var j=0; j<pathlist[i].length-1; j++) {
+            if (badmatrix[pathlist[i][j]][pathlist[i][j+1]]) {
+                pathdiv.removeClass('alert-success').addClass('alert-danger');
+                break;
+            }
+        }
+        pathdiv.html(pathlist[i].join(' -> '));
+        $('#chain').append(pathdiv);
+    }
+    $('#chain').append('<hr>');
+    for (var i=0; i<pathlist.length; i++) {
+        var pathdiv = $(document.createElement('div'));
+        pathdiv.addClass('alert').addClass('alert-success');
+        for (var j=0; j<pathlist[i].length-1; j++) {
+            if (badmatrix[pathlist[i][j]][pathlist[i][j+1]]) {
+                pathdiv.removeClass('alert-success').addClass('alert-danger');
+                break;
+            }
+        }
+        var names = [];
+        for (var j=0; j<pathlist[i].length; j++) {
+            names.push($('#'+id2id[pathlist[i][j]]).html());
+        }
+        pathdiv.html(names.join(' -> '));
+        $('#chain').append(pathdiv);
+    }
+
 });
 
 
