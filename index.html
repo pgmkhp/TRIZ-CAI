@@ -7,6 +7,9 @@
     <title>基于标准解的计算机辅助创新系统</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/fileinput.min.css" rel="stylesheet">
+    <link href="css/themes/default/style.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -21,8 +24,8 @@
     </nav>
     <!--导航条结束-->
 
-    <!--模态框：修改文字-->
-    <div id="modifyModal" class="modal fade" tabindex="-1">
+    <!--模态框：修改组件名称-->
+    <div id="modifycom" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -34,16 +37,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="newname">新名称</label>
-                        <input type="text" class="form-control" id="newname" placeholder="请在这里输入新名称">
+                        <input type="text" class="form-control" placeholder="请在这里输入新名称">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id='renamebtn' type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="modifyModal" class="modal fade" tabindex="-1">
+    <!--模态框：修改连线名称-->
+    <div id="modifyline" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -54,12 +58,25 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="newname">新名称</label>
-                        <input type="text" class="form-control" id="newname" placeholder="请在这里输入新名称">
+                        <label>新名称</label>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select id="fun1" class="form-control">
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="fun2" class="form-control">
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="fun3" class="form-control">
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id='renamebtn' type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
@@ -72,39 +89,263 @@
             <!--侧边栏-->     
             <div class="col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li><a href="#">问题分析</a></li>
-                    <li class="active"><a href="#">系统分析</a></li>
-                    <li><a href="#">标准解</a></li>
-                    <li><a href="#">作用链</a></li>
-                    <li><a href="#">生成报表</a></li>
+                    <li class="active"><a href="javascript:step(1)">问题分析</a></li>
+                    <li><a href="javascript:step(2)">系统分析</a></li>
+                    <li><a id="stdsolbtn" href="javascript:step(3)">标准解</a></li>
+                    <li><a id="chainbtn" href="javascript:step(4)">作用链</a></li>
+                    <li><a id="createbtn" href="javascript:step(5)">生成报表</a></li>
                 </ul>
             </div>
             <!--侧边栏结束-->
         
             <!--内容主体-->
             <div class="col-md-10 col-md-offset-2 main" id="main">
-                <!-- 工具栏 -->
-                <div class="container-fluid toolbar">
-                    <div class="btn-toolbar">
-                        <div class="btn-group">
-                            <button id="component3" type="button" class="btn btn-default">超系统组件</button>
-                            <button id="component1" type="button" class="btn btn-default">系统组件</button>
-                            <button id="component2" type="button" class="btn btn-default">作用对象</button>
+                <!--问题分析-->
+                <div id="step1" class="content">
+                    <form class="form-horizontal">
+                        <!--项目名称-->
+                        <div class="form-group">
+                            <label for="projectname" class="col-sm-2 control-label">项目名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="projectname" placeholder="请输入项目名称">
+                            </div>
                         </div>
-                        <div class="btn-group">
-                            <button id="line1" type="button" class="btn btn-default linebtn">充分</button>
-                            <button id="line2" type="button" class="btn btn-default linebtn">不足</button>
-                            <button id="line3" type="button" class="btn btn-default linebtn">过度</button>
-                            <button id="line4" type="button" class="btn btn-default linebtn">有害</button>
-                        </div>
-                    </div>            
-                </div>
-                <!-- 工具栏结束 -->
+                        <!--项目名称结束-->
 
-                <!-- 画板 -->
-                <div class="board" id="board">
+                        <!--问题描述-->
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">问题描述</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" placeholder="请输入问题描述"></textarea>
+                            </div>
+                        </div>
+                        <!--问题描述结束-->
+
+                        <!--项目成员-->
+                        <div class="form-group">
+                            <label for="member" class="col-sm-2 control-label">项目成员</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="member" placeholder="请输入项目成员">
+                            </div>
+                        </div>
+                        <!--问题描述结束-->
+
+                        <!--图片上传-->
+                        <div class="form-group">
+                            <label for="picture" class="col-sm-2 control-label">图片</label>
+                            <div class="col-sm-10">
+                                <input type="file" onchange="handleImg(this)" class="form-control file" id="picture" data-show-caption="false" data-show-upload="false" multiple data-allowed-file-extensions='["jpg", "jpeg", "bmp"]'>
+                            </div>
+                        </div>
+                        <!--图片上传结束-->
+
+                        <!--起止时间-->
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">时间</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="startdate" placeholder="开始时间">
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="enddate" placeholder="结束时间">
+                            </div>
+                        </div>
+                        <!--起止时间结束-->
+
+                        <!--保存按钮-->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a id="save" class="btn btn-default">保存</a>
+                            </div>
+                        </div>
+                        <!--保存按钮结束-->
+
+                    </form>
                 </div>
-                <!-- 画板结束 -->
+                <!--问题分析结束-->
+
+                <!--系统分析-->
+                <div id="step2" class="content">
+                    <!-- 工具栏 -->
+                    <div class="container-fluid toolbar">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <button id="component3" type="button" class="btn btn-default">超系统组件</button>
+                                <button id="component1" type="button" class="btn btn-default">系统组件</button>
+                                <button id="component2" type="button" class="btn btn-default">作用对象</button>
+                            </div>
+                            <div class="btn-group">
+                                <button id="line1" type="button" class="btn btn-default linebtn">充分</button>
+                                <button id="line2" type="button" class="btn btn-default linebtn">不足</button>
+                                <button id="line3" type="button" class="btn btn-default linebtn">过度</button>
+                                <button id="line4" type="button" class="btn btn-default linebtn">有害</button>
+                            </div>
+                        </div>            
+                    </div>
+                    <!-- 工具栏结束 -->
+
+                    <!-- 画板 -->
+                    <div class="board" id="board">
+                    </div>
+                    <!-- 画板结束 -->
+                </div>
+                <!--系统分析结束-->
+
+                <!--标准解-->
+                <div id="step3" class="content">
+                    <!--标准解上半部分-->
+                    <div id="top">
+                        <table id="stdsoltable" class="table table-striped table-bordered">
+                            <tr>
+                                <th class="col-md-2">作用</th>
+                                <th class="col-md-2">源组件</th>
+                                <th class="col-md-2">作用名称</th>
+                                <th class="col-md-2">目标组件</th>
+                                <th class="col-md-4">标准解</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--标准解上半部分结束-->
+                    
+                    <!--标准解下半部分-->
+                    <div id="bottom">
+                        <div class="row">
+                            <!--树形目录-->
+                            <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">标准解目录</h3>
+                                    </div>
+                                    <div id="ptree" class="panel-body">
+                                        <div id="tree"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--树形目录结束-->
+
+                            <!--标准解内容-->
+                            <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">标准解</h3>
+                                    </div>
+                                    <div id="stdsol" class="panel-body">
+                                        标准解内容
+                                    </div>
+                                </div>
+                            </div>
+                            <!--标准解内容结束-->
+                        </div>
+                    </div>
+                    <!--标准解下半部分结束-->
+                </div>
+                <!--标准解结束-->
+
+                <!--作用链-->
+                <div id="step4" class="content">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">组件与id的对应关系</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table id="id2id" class="table">
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">邻接矩阵 & 可达矩阵</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div id="matrix1" class="col-md-4">
+                                    <table></table>
+                                </div>
+                                <div id="matrix2" class="col-md-offset-2 col-md-4">
+                                    <table></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">作用链</h3>
+                        </div>
+                        <div id="chain" class="panel-body">
+                        </div>
+                    </div>
+                </div>
+                <!--作用链结束-->
+
+                <!--生成报告-->
+                <div id="step5" class="content">
+                    <!--项目基本描述-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">项目基本描述</h3>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目名称</div></dt>
+                                <dd id="oprojectname"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">问题描述</div></dt>
+                                <dd id="odescription"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目成员</div></dt>
+                                <dd id="omember"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">项目图片</div></dt>
+                                <dd id="opicture"></dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt class="col-md-2"><div class="text-left">起止时间</div></dt>
+                                <dd id="odate"></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!--项目基本描述结束-->
+
+                    <!--系统分析-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">系统分析</h3>
+                        </div>
+                        <div id="osysana" class="panel-body">
+                            
+                        </div>
+                    </div>
+                    <!--系统分析结束-->
+
+                    <!--标准解-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">标准解</h3>
+                        </div>
+                        <div id="ostdsol" class="panel-body">
+
+                        </div>
+                    </div>
+                    <!--标准解结束-->
+
+                    <!--作用链-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">作用链</h3>
+                        </div>
+                        <div id="ochain" class="panel-body">
+
+                        </div>
+                    </div>
+                    <!--作用链结束-->
+                </div>
+                <!--生成报告结束-->
+
             </div>
             <!--内容主体结束-->
         </div>   
@@ -117,11 +358,18 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jsplumb.min.js"></script>
+    <script src="js/fileinput.min.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/data1.js"></script>
+    <script src="js/data2.js"></script>
+    <script src="js/chaindata.js"></script>
+    <script src="js/stdsoldata.js"></script>
+    <script src="js/sylvester.js"></script>
     <script src="js/main.js"></script>
 
     <script>
-
-
+        $('.content').hide();
+        $('#step1').show();
     </script>
 </body>
 </html>

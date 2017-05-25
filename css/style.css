@@ -40,12 +40,15 @@ body {
     position: fixed;
     top:50px;
     bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 /* 网页内容部分结束*/
 
 /* 工具栏 */
 .toolbar {
     padding: 10px;
+    float: left;
     /*background-color: #f5f5f5;*/
 }
 /* 工具栏结束 */
@@ -53,9 +56,12 @@ body {
 /* 画板 */
 .board {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    left:10px;
+    right: 10px;
+    top: 70px;
+    bottom: 10px;
     background-color: #f5f5f5;
+    border: solid 1px #bbb;
 }
 /* 画板结束 */
 
@@ -90,6 +96,8 @@ body {
     top: 0px;
 }
 .component3 {
+    margin-left: 10px;
+    margin-right: 10px;
     height: 40px;
     background: #6c6;
     display: inline-block;
@@ -108,3 +116,42 @@ body {
     top: 0px;
 }
 /* 组件结束 */
+
+/* 标准解部分 */
+.content {
+    height: 100%;
+}
+#top {
+    height: 50%;
+    overflow-y: auto;
+}
+#bottom {
+    height: 50%;
+}
+#bottom div.row, #bottom div.col-sm-6 {
+    height: 100%;
+}
+#bottom div.panel {
+    height: 85%;
+}
+#ptree {
+    overflow-y: auto;
+    height: 85%;
+}
+/* 标准解部分结束 */
+
+/* 作用链部分 */
+#matrix1 table td, #matrix2 table td {
+    border: solid 1px;
+    padding: 5px;
+}
+/* 作用链部分结束 */
+
+/* 生成报告部分 */
+.oboard {
+    position: relative;
+    height: 500px;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+/* 生成报告部分结束 */
