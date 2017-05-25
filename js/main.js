@@ -39,6 +39,7 @@ function step(n) {
 }
 
 
+
 // --------------------------------------
 // |       问题分析部分                  |
 // --------------------------------------
@@ -67,7 +68,6 @@ $("#enddate").datepicker({
 // 起止日期选择结束
 
 // 保存项目基本信息
-
 function handleImg(source) {
     imglist = [];
     for (var i=0; i<source.files.length; i++) {
@@ -80,7 +80,6 @@ function handleImg(source) {
     }
 }
 
-
 $('#save').click(function() {
     projectname = $('#projectname').val();
     description = $('#description').val();
@@ -89,6 +88,7 @@ $('#save').click(function() {
     enddate = $('#enddate').val();
 
 });
+
 
 
 // --------------------------------------
@@ -246,11 +246,6 @@ jsPlumb.bind("mousedown", function(conn, originalEvent) {
     }      
 });
 
-
-
-
-
-
 // 存放图的数据结构
 function Graph() {
     this.vertices = 0;
@@ -306,10 +301,10 @@ function toString() {
 }
 
 
+
 // --------------------------------------
 // |       标准解部分                    |
 // --------------------------------------
-
 $('#stdsolbtn').click(function () {
     $('#top table tbody').html('<tr><th>作用</th><th>源组件</th><th>作用名称</th><th>目标组件</th><th>标准解</th></tr>');
 
@@ -322,11 +317,11 @@ $('#stdsolbtn').click(function () {
         $('#top table').append(html);
     }
     for (var i=0; i<list3.length; i++) {
-        var html = '<tr><td>过度</td><td>'+list3[i][0]+'</td><td>'+list3[i][2][0][0]+'</td><td>'+list3[i][1]+'</td><td></td></tr>';
+        var html = '<tr><td>过度</td><td>'+list3[i][0]+'</td><td>'+list3[i][2][0][0]+'</td><td>'+list3[i][1]+'</td><td><select class="form-control select3"></select></td></tr>';
         $('#top table').append(html);
     }
     for (var i=0; i<list4.length; i++) {
-        var html = '<tr><td>有害</td><td>'+list4[i][0]+'</td><td>'+list4[i][2][0][0]+'</td><td>'+list4[i][1]+'</td><td></td></tr>';
+        var html = '<tr><td>有害</td><td>'+list4[i][0]+'</td><td>'+list4[i][2][0][0]+'</td><td>'+list4[i][1]+'</td><td><select class="form-control select4"></select></td></tr>';
         $('#top table').append(html);
     }
     $('.select2').html('');
@@ -335,6 +330,20 @@ $('#stdsolbtn').click(function () {
     });
     for (var i=0; i<stdsoldata[2].length; i++) {
         $('.select2').append('<option id=s'+stdsoldata[2][i]+'>标准解'+ stdsoldata[2][i] +'</option>');
+    }
+    $('.select3').html('');
+    $('.select3').change(function () {
+        $(".select3").find("option:selected").addClass('selected');
+    });
+    for (var i=0; i<stdsoldata[3].length; i++) {
+        $('.select3').append('<option id=s'+stdsoldata[3][i]+'>标准解'+ stdsoldata[3][i] +'</option>');
+    }
+    $('.select4').html('');
+    $('.select4').change(function () {
+        $(".select4").find("option:selected").addClass('selected');
+    });
+    for (var i=0; i<stdsoldata[4].length; i++) {
+        $('.select4').append('<option id=s'+stdsoldata[4][i]+'>标准解'+ stdsoldata[4][i] +'</option>');
     }
 });
 
@@ -352,7 +361,6 @@ $('#tree').bind('select_node.jstree', function(e, data) {
 function printStdSol(num) {
     $('#stdsol').html(data2[num]);
 }
-
 
 
 
@@ -451,7 +459,6 @@ $('#chainbtn').click(function() {
     for (var i=0; i<slist.length; i++) {
         searchs2t(slist[i], tlist[0]);
     }
-
 
     // 输出id2id
     $('#id2id').html('<tbody></tbody>');
@@ -570,14 +577,12 @@ $('#createbtn').click(function() {
         var str = '从 '+ startdate +' 到 '+ enddate +' ，共 '+ days +' 天';
         $('#odate').html(str);
     }
-    
 
     // 系统分析部分
     var oboard = $('#board').clone();
     oboard.removeClass('board');
     oboard.addClass('oboard');
     $('#osysana').html(oboard);
-
 
     // 标准解部分
     var otable = $('#stdsoltable').clone();
@@ -586,9 +591,6 @@ $('#createbtn').click(function() {
     var selectedlist = document.getElementsByClassName('selected');
     for (var i=1; i<selectedlist.length; i++) {
         var sid = $(selectedlist[i]).attr('id').slice(1);
-        console.log(sid);
-        console.log(data2[sid]);
-        console.log(selectedlist[i].parentNode.parentNode);
         $(selectedlist[i].parentNode.parentNode).html(data2[sid]);
     }
 
