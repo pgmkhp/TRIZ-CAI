@@ -587,12 +587,11 @@ $('#createbtn').click(function() {
     // 标准解部分
     var otable = $('#stdsoltable').clone();
     $('#ostdsol').html(otable);
-    // $('#ostdsol tr td:last').html('ssss');
-    var selectedlist = document.getElementsByClassName('selected');
-    for (var i=1; i<selectedlist.length; i++) {
-        var sid = $(selectedlist[i]).attr('id').slice(1);
-        $(selectedlist[i].parentNode.parentNode).html(data2[sid]);
-    }
+    var selectedlist = $('.selected');
+    selectedlist.each(function() {
+        var sid = $(this).attr('id').slice(1);
+        $(this.parentNode.parentNode).html(data2[sid]);
+    });
 
     //作用链部分
     var ochain = $('#chain').clone();
