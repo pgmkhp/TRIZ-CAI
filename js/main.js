@@ -324,21 +324,21 @@ $('#stdsolbtn').click(function () {
         var html = '<tr><td>有害</td><td>'+list4[i][0]+'</td><td>'+list4[i][2][0][0]+'</td><td>'+list4[i][1]+'</td><td><select class="form-control select4"></select></td></tr>';
         $('#top table').append(html);
     }
-    $('.select2').html('');
+    $('.select2').html('<option selected>请选择</option>');
     $('.select2').change(function () {
         $(".select2").find("option:selected").addClass('selected');
     });
     for (var i=0; i<stdsoldata[2].length; i++) {
         $('.select2').append('<option id=s'+stdsoldata[2][i]+'>标准解'+ stdsoldata[2][i] +'</option>');
     }
-    $('.select3').html('');
+    $('.select3').html('<option selected>请选择</option>');
     $('.select3').change(function () {
         $(".select3").find("option:selected").addClass('selected');
     });
     for (var i=0; i<stdsoldata[3].length; i++) {
         $('.select3').append('<option id=s'+stdsoldata[3][i]+'>标准解'+ stdsoldata[3][i] +'</option>');
     }
-    $('.select4').html('');
+    $('.select4').html('<option selected>请选择</option>');
     $('.select4').change(function () {
         $(".select4").find("option:selected").addClass('selected');
     });
@@ -587,12 +587,11 @@ $('#createbtn').click(function() {
     // 标准解部分
     var otable = $('#stdsoltable').clone();
     $('#ostdsol').html(otable);
-    // $('#ostdsol tr td:last').html('ssss');
-    var selectedlist = document.getElementsByClassName('selected');
-    for (var i=1; i<selectedlist.length; i++) {
-        var sid = $(selectedlist[i]).attr('id').slice(1);
-        $(selectedlist[i].parentNode.parentNode).html(data2[sid]);
-    }
+    var selectedlist = $('.selected');
+    selectedlist.each(function() {
+        var sid = $(this).attr('id').slice(1);
+        $(this.parentNode.parentNode).html(data2[sid]);
+    });
 
     //作用链部分
     var ochain = $('#chain').clone();
