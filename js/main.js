@@ -324,21 +324,21 @@ $('#stdsolbtn').click(function () {
         var html = '<tr><td>有害</td><td>'+list4[i][0]+'</td><td>'+list4[i][2][0][0]+'</td><td>'+list4[i][1]+'</td><td><select class="form-control select4"></select></td></tr>';
         $('#top table').append(html);
     }
-    $('.select2').html('');
+    $('.select2').html('<option selected>请选择</option>');
     $('.select2').change(function () {
         $(".select2").find("option:selected").addClass('selected');
     });
     for (var i=0; i<stdsoldata[2].length; i++) {
         $('.select2').append('<option id=s'+stdsoldata[2][i]+'>标准解'+ stdsoldata[2][i] +'</option>');
     }
-    $('.select3').html('');
+    $('.select3').html('<option selected>请选择</option>');
     $('.select3').change(function () {
         $(".select3").find("option:selected").addClass('selected');
     });
     for (var i=0; i<stdsoldata[3].length; i++) {
         $('.select3').append('<option id=s'+stdsoldata[3][i]+'>标准解'+ stdsoldata[3][i] +'</option>');
     }
-    $('.select4').html('');
+    $('.select4').html('<option selected>请选择</option>');
     $('.select4').change(function () {
         $(".select4").find("option:selected").addClass('selected');
     });
