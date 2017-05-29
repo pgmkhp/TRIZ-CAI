@@ -67,6 +67,7 @@ body {
 
 /* 组件 */
 .component1 {
+    min-width: 70px;
     position: absolute;
     height: 40px;
     background-color: #eee;
@@ -76,6 +77,7 @@ body {
     line-height: 40px;
 }
 .component2 {
+    min-width: 70px;
     position: absolute;
     border: 1px solid #aaa;
     background-color: #ddddff;
@@ -96,6 +98,7 @@ body {
     top: 0px;
 }
 .component3 {
+    min-width: 70px;
     margin-left: 10px;
     margin-right: 10px;
     height: 40px;

@@ -433,7 +433,7 @@ $('#chainbtn').click(function() {
     var pathlist = [];
     var path = [];
     function searchs2t(s, t) {
-        if (path.length >= matrix1.length+1) {
+        if (path.length >= matrix1.length*matrix1.length/2) {
             return;
         }
         path.push(s);
