@@ -135,11 +135,22 @@ body {
     height: 100%;
 }
 #bottom div.panel {
-    height: 85%;
+    height: 95%;
 }
 #ptree {
     overflow-y: auto;
-    height: 85%;
+    height: -webkit-calc(100% - 38px);
+}
+#stdsol {
+    overflow-y: auto;
+    height: -webkit-calc(100% - 38px);
+}
+#stdsol div img{
+    width: 50%;
+}
+#stdsol div div{
+    width: 50%;
+    float: left;
 }
 /* 标准解部分结束 */
 

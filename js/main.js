@@ -127,7 +127,16 @@ function createComponent(classname) {
         }
     });
 }
-
+// 自动对焦输入框
+$('#modifycom').on('shown.bs.modal', function() {
+    $('#modifycom input').focus();
+});
+// 绑定回车键
+$('#modifycom input').keypress(function(e) {
+    if (e.keyCode == 13) {
+        $('#modifycom button:last').click();
+    }
+});
 // 修改名字
 $('#modifycom button:last').click(function() {
     if (curcomp) {
@@ -382,7 +391,19 @@ $('#tree').bind('select_node.jstree', function(e, data) {
     }
 });
 function printStdSol(num) {
-    $('#stdsol').html(data2[num]);
+    var div = document.createElement('div');
+    var img1 = document.createElement('img');
+    var img2 = document.createElement('img');
+    var img3 = document.createElement('img');
+    img1.src = 'images/' + num + 'a.png';
+    img2.src = 'images/' + num + 'b.png';
+    // img3.src = 'images/' + num + 'c.png';
+    $(div).append('<div><em>问题模型</em></div>').append('<div><em>解决方案模型</em></div>');
+    $(div).append(img1).append(img2);
+    $('#stdsol').html('');
+    $('#stdsol').append('<p><strong>描述：</strong>'+data2[num]+'</p>');
+    $('#stdsol').append(div);
+    $('#stdsol').append('<p><strong>案例：</strong>'+data3[num]+'</p>');
 }
 
 
