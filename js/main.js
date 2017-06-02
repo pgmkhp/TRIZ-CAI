@@ -140,7 +140,12 @@ $('#modifycom button:last').click(function() {
 
 jsPlumb.ready(function() { 
     jsPlumb.importDefaults({
-        Anchor: "AutoDefault",
+        Anchor: [
+            [0.2,0,0,0], [0.4,0,0,0], [0.6,0,0,0], [0.8,0,0,0], 
+            [0.2,1,0,0], [0.4,1,0,0], [0.6,1,0,0], [0.8,1,0,0], 
+            [0,0.3,1,0], [0,0.5,1,0], [0,0.7,1,0],
+            [1,0.3,0,0], [1,0.5,0,0], [1,0.7,0,0],
+        ],
         Endpoint: ["Dot", {radius: 3}],
         DragOptions: {cursor: "crosshair" },
         Container: "board",
@@ -178,6 +183,7 @@ $('.linebtn').click(function() {
     jsPlumb.makeSource($('.component'), {detachable:false});
     jsPlumb.makeTarget($('.component'), {detachable:false});
     $(this).addClass('btn-primary');
+    $('.linebtn').attr('disabled', 'disabled');
 });
 
 // 连线事件
@@ -196,29 +202,46 @@ jsPlumb.bind("connection", function(conn, originalEvent) {
     else if (curline == 'line4')
         line4data.addEdge(conn.sourceId, conn.targetId);
     
+    $('.linebtn').removeAttr('disabled');
     curline = null;
 });
 
-// 鼠标双击连线，修改连线标题
+// 鼠标双击连线，修改连线标题以及连线样式
 jsPlumb.bind("dblclick", function(conn, originalEvent) {
-    $('#modifyline').modal('toggle');
+    $('#modifyline').modal('show');
     curline = conn;
 
     $('#fun1').html('<option selected> 请选择 </option>');
     $('#fun2').html('<option selected> 请选择 </option>');
-    $('#fun3').html('<option selected> 请选择 </option>');
+    $('#fun3').html('<option> 请选择 </option>');
     for (var fun1 in chaindata) {
         $('#fun1').append('<option>'+ fun1 +'</option>');
     }
+
+    $('#linestyle').html('<option> 请选择 </option><option value="1">直线</option><option value="2">曲线</option>');
 });
 $('#modifyline button:last').click(function() {
-    curline.setLabel($('#fun3').children('option:selected').val());
-    $('#modifyline').modal('toggle');
+    var tmp;
+    tmp = $('#fun3').children('option:selected')
+    if (tmp.val() != '请选择') {
+        curline.setLabel(tmp.val());
+    }
+    
+    tmp = $('#linestyle').children('option:selected').attr('value');
+    if (tmp == '1') {
+        curline.setConnector('Straight');
+        curline.addOverlay(["PlainArrow", {location: 1}]);
+    } else if (tmp == '2') {
+        curline.setConnector('Bezier');
+        curline.addOverlay(["PlainArrow", {location: 1}]);
+    }
+    
+    $('#modifyline').modal('hide');
     curline = null;
 });
 $('#fun1').change(function() {
     $('#fun2').html('<option selected> 请选择 </option>');
-    $('#fun3').html('<option selected> 请选择 </option>');
+    $('#fun3').html('<option> 请选择 </option>');
     var fun1 = $('#fun1').children('option:selected').val();
     for (var fun2 in chaindata[fun1]) {
         $('#fun2').append('<option>'+ fun2 +'</option>');
